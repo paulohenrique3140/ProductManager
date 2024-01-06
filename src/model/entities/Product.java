@@ -2,7 +2,7 @@ package model.entities;
 
 import java.util.Objects;
 
-public abstract class Product implements IProduct {
+public abstract class Product implements IProduct, Comparable<Product> {
 	
 	private String name;
 	private Double price;
@@ -44,5 +44,15 @@ public abstract class Product implements IProduct {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+	}
+	
+	@Override
+	public int compareTo(Product other) {
+		return name.toUpperCase().compareTo(other.getName().toUpperCase());
+	}
+
+	@Override
+	public String toString() {
+		return "Product [name=" + name + ", price=" + price + ", id=" + id + "]";
 	}
 }
