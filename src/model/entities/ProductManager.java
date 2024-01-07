@@ -40,23 +40,29 @@ public class ProductManager {
 
 		if (optionalProduct.isPresent()) {
 			Product product = optionalProduct.get();
-
-			if (newName != null) {
-				boolean nameExists = stock.stream().anyMatch(p -> p.getId() != id && p.getName().toUpperCase().equals(newName.toUpperCase()));
-				if (!nameExists) {
-					product.setName(newName);
-					System.out.println("Product name updated successfully.");
-				} else {
-					System.out.println("Product with the same name already exists. Update failed.");
+			
+			if (newName == null && newPrice == null) {
+				System.out.println("You need to provide at least the name or the price to be updated.");
+			} else {
+				if (newName != null) {
+					boolean nameExists = stock.stream().anyMatch(p -> p.getId() != id && p.getName().toUpperCase().equals(newName.toUpperCase()));
+					if (!nameExists) {
+						product.setName(newName);
+						System.out.println("Product name updated successfully.");
+					} else {
+						System.out.println("Product with the same name already exists. Update failed.");
+					}
 				}
-			}
 
-			if (newPrice != null) {
-				product.setPrice(newPrice);
-				System.out.println("Product price updated successfully.");
-			}
+				if (newPrice != null) {
+					product.setPrice(newPrice);
+					System.out.println("Product price updated successfully.");
+				}
 
-			System.out.println("Updated Product:\n" + product);
+				System.out.println("Updated Product:\n" + product);
+			}
+			
+			
 		} else {
 			System.out.println("No products were found with the ID " + id + ". Update failed.");
 		}

@@ -5,11 +5,15 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.entities.Eletronic;
+import model.entities.MusicalInstrument;
 import model.entities.Product;
 import model.entities.ProductManager;
+import model.entities.enums.Country;
 
 public class FileService {
 
@@ -32,7 +36,7 @@ public class FileService {
 		}
 	}
 	
-	public void removeFromFile(ProductManager productManager) {
+	public void deleteFromFile(ProductManager productManager) {
 		String sourceFileStr = path + "\\cargaDelete.txt";
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(sourceFileStr))){
@@ -65,8 +69,74 @@ public class FileService {
 			
 			
 		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error reading file: " + e.getMessage());
 		}
 	}
-
+	
+	public void updateFromFile(ProductManager productManager) {
+		String sourceFileStr = path + "\\cargaUpdate.txt";
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(sourceFileStr))){
+			String line = br.readLine();
+			
+			while (line != null) {
+				String[] fields = line.split(",");
+				String name = fields[0];
+				Double price = Double.parseDouble(fields[1]);
+				int id = Integer.parseInt(fields[2]);
+				
+				boolean found = false;
+				
+				for(Product x : productManager.getStock()) {
+					if (id == x.getId()) {
+						productManager.updateProduct(id, name, price);
+						found = true;
+						break;
+					}
+				}
+				
+				if (!found) {
+					System.out.println("No products were found with the ID " + id);
+				}
+				
+				line = br.readLine();
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Error reading file: " + e.getMessage());
+		}
+	}
+	
+	public void insertFromFile(ProductManager productManager) {
+		String sourceFileStr = path + "\\cargaInsert.txt";
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(sourceFileStr))){
+			String line = br.readLine();
+			
+			while (line != null) {
+				String[] fields = line.split(",");
+				String name = fields[0];
+				double price = Double.parseDouble(fields[1]);
+				int id = Integer.parseInt(fields[2]);
+				
+				
+				if (fields.length == 4) {
+					Country country = Country.valueOf(fields[3].toUpperCase());
+					System.out.println("#### ATENCAO #### "+ country);
+					productManager.addProduct(new MusicalInstrument(name, price, id, country));	
+				} else if (fields.length == 5) {
+					int guarantee = Integer.parseInt(fields[3]);
+					String date = fields[4];
+					productManager.addProduct(new Eletronic(name, price, id, guarantee, LocalDate.parse(date)));					
+				} else {
+					System.out.println("Error: Invalid data for record type");
+				}
+				
+				line = br.readLine();
+			}
+			
+		} catch (IOException e) {
+			System.out.println("Error reading file: " + e.getMessage());
+		}
+	}
 }

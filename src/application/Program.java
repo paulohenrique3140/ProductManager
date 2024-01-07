@@ -82,6 +82,11 @@ public class Program {
 	
 		System.out.println();
 		System.out.println();
+		System.out.println("TESTANDO UPDATE PRODUCT COM NAME E PRICE NULL");
+		teste.updateProduct(35, null, null);
+		
+		System.out.println();
+		System.out.println();
 		System.out.println("TESTANDO UPDATE PRODUCT INCORRETO");
 		teste.updateProduct(999, "TESTE UPDATE", 1350.00);
 		
@@ -115,7 +120,23 @@ public class Program {
 		System.out.println();
 		System.out.println();
 		System.out.println("TESTANDO O METODO REMOVE FROM FILE");
-		fileService.removeFromFile(teste);
+		fileService.deleteFromFile(teste);
 		fileService.writeToFile(teste);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO UPDATE FROM FILE");
+		fileService.updateFromFile(teste);
+		fileService.writeToFile(teste);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO INSERT FROM FILE");
+		fileService.insertFromFile(teste);
+		fileService.writeToFile(teste);
+		teste.displayProducts();
+		
+		
 	}
+	
 }
