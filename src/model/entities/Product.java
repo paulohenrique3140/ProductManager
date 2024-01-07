@@ -30,8 +30,15 @@ public abstract class Product implements IProduct, Comparable<Product> {
 	}
 
 	@Override
+	public String toString() {
+		return "\nName: " + name + " | Price: " + price + " | ID: " + id + "\n";
+	}
+	
+	
+
+	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -43,16 +50,12 @@ public abstract class Product implements IProduct, Comparable<Product> {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-	}
-	
-	@Override
-	public int compareTo(Product other) {
-		return name.toUpperCase().compareTo(other.getName().toUpperCase());
+		return Objects.equals(id, other.id);
 	}
 
 	@Override
-	public String toString() {
-		return "Product [name=" + name + ", price=" + price + ", id=" + id + "]";
+	public int compareTo(Product other) {
+	    return Integer.compare(id, other.getId());
+	    
 	}
 }
