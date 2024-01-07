@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -33,8 +32,8 @@ public class ProductManager {
 	}
 	
 	public String findProduct(int id) {
-		Optional<Product> foundProduct = stock.stream().filter(x -> x.getId() == id).findFirst();
-		return foundProduct.map(Product::toString).orElse("No products were found with the ID " + id);
+		return stock.stream().filter(x -> x.getId() == id).findFirst()
+				.map(Product::toString).orElse("No products were found with the ID " + id);
 	}
 	
 	public void removeProduct(int id) {
@@ -43,4 +42,6 @@ public class ProductManager {
 		}
 		stock.removeIf(product -> product.getId() == id);
 	}
+	
+	
 }

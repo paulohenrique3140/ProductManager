@@ -61,5 +61,16 @@ public class Program {
 		teste.addProduct(jaTemId);
 		teste.addProduct(jaTemIdInst);
 		System.out.println(teste.displayProducts());
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO CHECKTAX");
+		System.out.println(m.checkTax());
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO FINDPRODUCT");
+		System.out.println(teste.findProduct(555));
+		System.out.println(teste.findProduct(31));
 	}
 }

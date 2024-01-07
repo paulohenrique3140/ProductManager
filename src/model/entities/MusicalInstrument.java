@@ -1,5 +1,8 @@
 package model.entities;
 
+import java.util.Map;
+import java.util.Optional;
+
 import model.entities.enums.Country;
 
 public class MusicalInstrument extends Product {
@@ -19,20 +22,16 @@ public class MusicalInstrument extends Product {
 		this.country = country;
 	}
 	
-	public Double checkTax() {
-		if (country != null) {
-			switch (country) {
-			case US, UK:
-				return getPrice() + (getPrice() * 0.25);
-			case CN, PT:
-				return getPrice() + (getPrice() * 0.40);
-			case BR, CO:
-				return getPrice() + (getPrice() * 0.10);
-			default:
-				break;
-			}
-		}
-		return null;
-	}
+	private static final Map<Country, Double> TAX_RATES = Map.of(
+			Country.US, 0.25,
+			Country.UK, 0.25,
+			Country.CN, 0.40,
+			Country.PT, 0.40,
+			Country.BR, 0.10,
+			Country.CO, 0.10
+		);
 	
+	public Double checkTax() {
+		return Optional.ofNullable(TAX_RATES.get(country)).map(rate -> getPrice() + (getPrice() * rate)).orElse(null);
+	}
 }

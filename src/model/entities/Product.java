@@ -53,12 +53,6 @@ public abstract class Product implements IProduct, Comparable<Product> {
 
 	@Override
 	public int compareTo(Product other) {
-	    /*int result = name.toUpperCase().compareTo(other.getName().toUpperCase());
-	    if (result == 0) {
-	    	result = Integer.compare(id,  other.getId());
-	    }
-	    return result;
-	    return Integer.compare(id,  other.getId());*/
 	    return name.toUpperCase().compareTo(other.getName().toUpperCase());
 	}
 }
