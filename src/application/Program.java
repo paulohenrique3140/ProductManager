@@ -2,6 +2,7 @@ package application;
 
 import java.time.LocalDate;
 
+import files.FileService;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
 import model.entities.ProductManager;
@@ -10,10 +11,10 @@ import model.entities.enums.Country;
 public class Program {
 	public static void main(String[] args) {
 
-		Eletronic p = new Eletronic("Computer", 1500.00, 22, 36, LocalDate.parse("2021-01-07"));
+		Eletronic p = new Eletronic("Computer", 1500.00, 22, 36, LocalDate.parse("2021-01-08"));
 		MusicalInstrument m = new MusicalInstrument("Piano", 15000.00, 31, Country.PT);
 
-		Eletronic naoTem = new Eletronic("Mouse", 250.00, 35, 12, LocalDate.parse("2022-02-08"));
+		Eletronic naoTem = new Eletronic("Mouse", 250.00, 35, 3, LocalDate.parse("2022-02-08"));
 		Eletronic jaTem = new Eletronic("Computer", 1500.00, 22, 36, LocalDate.parse("2021-01-07"));
 
 		MusicalInstrument naoTemInst = new MusicalInstrument("Violao", 900.00, 99, Country.BR);
@@ -32,35 +33,35 @@ public class Program {
 		System.out.println("TESTE DE INCLUSAO INICIAL");
 		teste.addProduct(p);
 		teste.addProduct(m);
-		System.out.println(teste.displayProducts());
+		teste.displayProducts();
 
 		System.out.println();
 		System.out.println();
 		System.out.println("TESTE DE INCLUSAO DE ELEMENTOS TOTALMENTE DIFERENTES");
 		teste.addProduct(naoTem);
 		teste.addProduct(naoTemInst);
-		System.out.println(teste.displayProducts());
+		teste.displayProducts();
 
 		System.out.println();
 		System.out.println();
 		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS COM ID E NAME REPETIDOS");
 		teste.addProduct(jaTem);
 		teste.addProduct(jaTemInst);
-		System.out.println(teste.displayProducts());
+		teste.displayProducts();
 
 		System.out.println();
 		System.out.println();
 		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS NAME REPETIDO E ID DIFERENTE");
 		teste.addProduct(jaTemNome);
 		teste.addProduct(jaTemNomeInst);
-		System.out.println(teste.displayProducts());
+		teste.displayProducts();
 		
 		System.out.println();
 		System.out.println();
 		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS COM ID REPETIDO E NAME DIFEENTE");
 		teste.addProduct(jaTemId);
 		teste.addProduct(jaTemIdInst);
-		System.out.println(teste.displayProducts());
+		teste.displayProducts();
 		
 		System.out.println();
 		System.out.println();
@@ -69,8 +70,52 @@ public class Program {
 		
 		System.out.println();
 		System.out.println();
+		System.out.println("TESTANDO O METODO CHECK GUARANTEE");
+		System.out.println(p.checkGuarantee());
+		System.out.println(naoTem.checkGuarantee());
+		
+		System.out.println();
+		System.out.println();
 		System.out.println("TESTANDO O METODO FINDPRODUCT");
 		System.out.println(teste.findProduct(555));
 		System.out.println(teste.findProduct(31));
+	
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO UPDATE PRODUCT INCORRETO");
+		teste.updateProduct(999, "TESTE UPDATE", 1350.00);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO UPDATE PRODUCT COM NAME JA EXISTENTE");
+		teste.updateProduct(31, "Computer", 1350.00);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO UPDATE PRODUCT SOMENTE DO NAME");
+		teste.updateProduct(31, "Garfo Musical", null);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO UPDATE PRODUCT SOMENTE DO PRICE");
+		teste.updateProduct(31, null, 350000.00);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO REMOVE PRODUCT");
+		teste.removeProduct(1990);
+		teste.removeProduct(31);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO WRITE TO FILE");
+		FileService fileService = new FileService("C:\\Users\\paulo\\Documents\\Testes_Files");
+		fileService.writeToFile(teste);
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("TESTANDO O METODO REMOVE FROM FILE");
+		fileService.removeFromFile(teste);
+		fileService.writeToFile(teste);
 	}
 }

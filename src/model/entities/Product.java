@@ -28,12 +28,22 @@ public abstract class Product implements IProduct, Comparable<Product> {
 	public Integer getId() {
 		return id;
 	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
 
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	
+	
 	@Override
 	public String toString() {
-		return "\nName: " + name + " | Price: " + price + " | ID: " + id + "\n";
+		return "\nName: " + name + " | Price: BRL " + price + " | ID: " + id + "\n";
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
@@ -53,6 +63,6 @@ public abstract class Product implements IProduct, Comparable<Product> {
 
 	@Override
 	public int compareTo(Product other) {
-	    return name.toUpperCase().compareTo(other.getName().toUpperCase());
+		return name.toUpperCase().compareTo(other.getName().toUpperCase());
 	}
 }
