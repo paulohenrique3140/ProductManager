@@ -3,15 +3,22 @@ package model.entities;
 import java.util.Map;
 import java.util.Optional;
 
+import exceptions.MusicalInstrumentException;
 import model.entities.enums.Country;
+import services.Util;
 
 public class MusicalInstrument extends Product {
 	
 	private Country country;
 
-	public MusicalInstrument(String name, Double price, Integer id, Country country) {
+	public MusicalInstrument(String name, Double price, Integer id, String country) {
 		super(name, price, id);
-		this.country = country;
+		Country countryEnum = Util.safeValueOf(Country.class, country.toUpperCase());
+		
+		if (countryEnum == null) {
+			throw new MusicalInstrumentException("Country cannot be null or different from the pre-established. Type again: ");
+		}
+		this.country = Country.valueOf(country);
 	}
 
 	public Country getCountry() {

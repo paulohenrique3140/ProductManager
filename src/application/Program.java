@@ -1,140 +1,57 @@
 package application;
 
 import java.time.LocalDate;
+import java.util.Locale;
+import java.util.Scanner;
 
-import files.FileService;
+import exceptions.CustomException;
+import exceptions.EletronicException;
+import exceptions.MusicalInstrumentException;
+import exceptions.ProductException;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
 import model.entities.ProductManager;
-import model.entities.enums.Country;
 
 public class Program {
 	public static void main(String[] args) {
-
-		Eletronic p = new Eletronic("Computer", 1500.00, 22, 36, LocalDate.parse("2021-01-08"));
-		MusicalInstrument m = new MusicalInstrument("Piano", 15000.00, 31, Country.PT);
-
-		Eletronic naoTem = new Eletronic("Mouse", 250.00, 35, 3, LocalDate.parse("2022-02-08"));
-		Eletronic jaTem = new Eletronic("Computer", 1500.00, 22, 36, LocalDate.parse("2021-01-07"));
-
-		MusicalInstrument naoTemInst = new MusicalInstrument("Violao", 900.00, 99, Country.BR);
-		MusicalInstrument jaTemInst = new MusicalInstrument("Piano", 15000.00, 31, Country.PT);
-
-		Eletronic jaTemNome = new Eletronic("Computer", 3200.00, 102, 24, LocalDate.parse("2023-05-30"));
-		MusicalInstrument jaTemNomeInst = new MusicalInstrument("Violao", 150.00, 98, Country.CN);
-
-		Eletronic jaTemId = new Eletronic("Celular", 2200.00, 22, 24, LocalDate.parse("2023-05-30"));
-		MusicalInstrument jaTemIdInst = new MusicalInstrument("Guitarra", 320.00, 12, Country.CN);
-
-		System.out.println();
-
-		ProductManager teste = new ProductManager();
-
-		System.out.println("TESTE DE INCLUSAO INICIAL");
-		teste.addProduct(p);
-		teste.addProduct(m);
-		teste.displayProducts();
-
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTE DE INCLUSAO DE ELEMENTOS TOTALMENTE DIFERENTES");
-		teste.addProduct(naoTem);
-		teste.addProduct(naoTemInst);
-		teste.displayProducts();
-
-		System.out.println();
-		System.out.println();
-		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS COM ID E NAME REPETIDOS");
-		teste.addProduct(jaTem);
-		teste.addProduct(jaTemInst);
-		teste.displayProducts();
-
-		System.out.println();
-		System.out.println();
-		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS NAME REPETIDO E ID DIFERENTE");
-		teste.addProduct(jaTemNome);
-		teste.addProduct(jaTemNomeInst);
-		teste.displayProducts();
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
 		
-		System.out.println();
-		System.out.println();
-		System.out.println("TENTATIVA DE INCLUSAO ELEMENTOS COM ID REPETIDO E NAME DIFEENTE");
-		teste.addProduct(jaTemId);
-		teste.addProduct(jaTemIdInst);
-		teste.displayProducts();
+		ProductManager testeException = new ProductManager();
+		double price = -1.0;
+		int guarantee = -1;
+		String country = "BC";
+		int id = 0;
 		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO CHECKTAX");
-		System.out.println(m.checkTax());
+		do {
+			try {
+				Eletronic testPrice = new Eletronic("PC", price, 1, 12, LocalDate.parse("2023-02-05"));
+				Eletronic testGuarantee = new Eletronic("CPU", 1500.00, 2, guarantee, LocalDate.parse("2023-02-05"));
+				Eletronic testId = new Eletronic("Mouse", 45.00, id, 15, LocalDate.parse("2023-02-05"));
+				MusicalInstrument testCountry = new MusicalInstrument("Viola", 650.00, 5, country);
+				
+				testeException.addProduct(testPrice);
+				testeException.addProduct(testGuarantee);
+				testeException.addProduct(testId);
+				testeException.addProduct(testCountry);
+				
+				
+			} catch (ProductException e) {
+				System.out.println("Error: " + e.getMessage());
+				price = sc.nextDouble();
+			} catch (EletronicException e) {
+				System.out.println("Error: " + e.getMessage());
+				guarantee = sc.nextInt();
+			} catch (MusicalInstrumentException e) {
+				sc.nextLine();
+				System.out.println("Error: " + e.getMessage());
+				country = sc.nextLine();
+			} catch (CustomException e) {
+				System.out.println("Error: " + e.getMessage());
+				id = sc.nextInt();
+			} 
+		} while (testeException.getStock().size() == 0);
 		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO CHECK GUARANTEE");
-		System.out.println(p.checkGuarantee());
-		System.out.println(naoTem.checkGuarantee());
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO FINDPRODUCT");
-		System.out.println(teste.findProduct(555));
-		System.out.println(teste.findProduct(31));
-	
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO UPDATE PRODUCT COM NAME E PRICE NULL");
-		teste.updateProduct(35, null, null);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO UPDATE PRODUCT INCORRETO");
-		teste.updateProduct(999, "TESTE UPDATE", 1350.00);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO UPDATE PRODUCT COM NAME JA EXISTENTE");
-		teste.updateProduct(31, "Computer", 1350.00);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO UPDATE PRODUCT SOMENTE DO NAME");
-		teste.updateProduct(31, "Garfo Musical", null);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO UPDATE PRODUCT SOMENTE DO PRICE");
-		teste.updateProduct(31, null, 350000.00);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO REMOVE PRODUCT");
-		teste.removeProduct(1990);
-		teste.removeProduct(31);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO WRITE TO FILE");
-		FileService fileService = new FileService("C:\\Users\\paulo\\Documents\\Testes_Files");
-		fileService.writeToFile(teste);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO REMOVE FROM FILE");
-		fileService.deleteFromFile(teste);
-		fileService.writeToFile(teste);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO UPDATE FROM FILE");
-		fileService.updateFromFile(teste);
-		fileService.writeToFile(teste);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println("TESTANDO O METODO INSERT FROM FILE");
-		fileService.insertFromFile(teste);
-		fileService.writeToFile(teste);
-		teste.displayProducts();
 		
 		
 	}

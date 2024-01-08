@@ -121,7 +121,7 @@ public class FileService {
 				
 				
 				if (fields.length == 4) {
-					Country country = Country.valueOf(fields[3].toUpperCase());
+					String country = fields[3].toUpperCase();
 					System.out.println("#### ATENCAO #### "+ country);
 					productManager.addProduct(new MusicalInstrument(name, price, id, country));	
 				} else if (fields.length == 5) {

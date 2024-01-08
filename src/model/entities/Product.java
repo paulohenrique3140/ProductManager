@@ -2,6 +2,9 @@ package model.entities;
 
 import java.util.Objects;
 
+import exceptions.CustomException;
+import exceptions.ProductException;
+
 public abstract class Product implements IProduct, Comparable<Product> {
 	
 	private String name;
@@ -9,6 +12,13 @@ public abstract class Product implements IProduct, Comparable<Product> {
 	private Integer id;
 	
 	public Product(String name, Double price, Integer id) {
+		if (price < 0) {
+			throw new ProductException("The price cannot be less than zero. Type again: ");
+		}
+		if (id <= 0) {
+			throw new CustomException("The id cannot be less than zero. Type again: ");
+		}
+		
 		this.name = name;
 		this.price = price;
 		this.id = id;

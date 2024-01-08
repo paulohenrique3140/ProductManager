@@ -4,6 +4,8 @@ package model.entities;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import exceptions.EletronicException;
+
 public class Eletronic extends Product {
 	
 	private Integer guarantee;
@@ -13,6 +15,9 @@ public class Eletronic extends Product {
 	
 	public Eletronic(String name, Double price, Integer id, Integer guarantee, LocalDate purchaseDate) {
 		super(name, price, id);
+		if (guarantee < 0) {
+			throw new EletronicException("The guarantee cannot be less than zero. Type again: ");
+		}
 		this.guarantee = guarantee;
 		this.purchaseDate = purchaseDate;
 	}
