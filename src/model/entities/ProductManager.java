@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
+import exceptions.CustomException;
+
 public class ProductManager {
 
 	private Set<Product> stock;
@@ -18,9 +20,9 @@ public class ProductManager {
 
 	public void addProduct(Product product) {
 		if (stock.contains(product)) {
-			System.out.println("Product already exists, Cannot add the same product.");
+			throw new CustomException("Product already exists, Cannot add the same product.");
 		} else if (stock.stream().anyMatch(x -> x.getId().equals(product.getId()))) {
-			System.out.println("Product with the same ID already exists. Cannot add the product.");
+			throw new CustomException("Product with the same ID already exists. Cannot add the product.");
 		} else {
 			stock.add(product);
 		}

@@ -13,7 +13,7 @@ public class MusicalInstrument extends Product {
 
 	public MusicalInstrument(String name, Double price, Integer id, String country) {
 		super(name, price, id);
-		Country countryEnum = Util.safeValueOf(Country.class, country.toUpperCase());
+		Country countryEnum = Util.safeValueOf(Country.class, country);
 		
 		if (countryEnum == null) {
 			throw new MusicalInstrumentException("Country cannot be null or different from the pre-established. Type again: ");

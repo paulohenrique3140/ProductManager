@@ -12,7 +12,7 @@ public abstract class Product implements IProduct, Comparable<Product> {
 	private Integer id;
 	
 	public Product(String name, Double price, Integer id) {
-		if (price < 0) {
+		if (price < 0 || id < 0) {
 			throw new ProductException("The price cannot be less than zero. Type again: ");
 		}
 		if (id <= 0) {
