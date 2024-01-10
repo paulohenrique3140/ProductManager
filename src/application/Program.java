@@ -1,6 +1,7 @@
 package application;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -25,7 +26,7 @@ public class Program {
 		int id = 0;
 		int ans = 1;
 
-		String testUpdate = "s";
+		/*String testUpdate = "s";
 
 		do {
 			try {
@@ -40,7 +41,7 @@ public class Program {
 			} catch (CustomException e) {
 				System.out.println("ERRRRRRROU: " + e.getMessage());
 			}
-		} while (testUpdate.equals('s'));
+		} while (testUpdate.equals('s'));*/
 		
 		
 		do {
@@ -87,6 +88,9 @@ public class Program {
 			} catch (CustomException e) {
 				System.out.println("Error: " + e.getMessage());
 				sc.nextLine();
+			} catch (DateTimeParseException e) {
+				System.out.println("Error: Invalid formate date. Try again with 'YYYY-MM-DD.");
+				
 			} catch (InputMismatchException e) {
 				System.out.println("Error: Invalid data. Try again.");
 				sc.nextLine();

@@ -29,6 +29,7 @@ public class ProductManager {
 	}
 
 	public void displayProducts() {
+		
 		System.out.println(stock);
 	}
 
