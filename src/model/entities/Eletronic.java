@@ -18,6 +18,8 @@ public class Eletronic extends Product {
 		if (guarantee < 0) {
 			throw new EletronicException("The guarantee cannot be less than zero. Type again: ");
 		}
+		
+		if (purchaseDate != LocalDate.parse("YYYY-MM-DD"))
 		this.guarantee = guarantee;
 		this.purchaseDate = purchaseDate;
 	}

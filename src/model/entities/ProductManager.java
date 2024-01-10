@@ -42,12 +42,13 @@ public class ProductManager {
 
 		if (optionalProduct.isPresent()) {
 			Product product = optionalProduct.get();
-			
+
 			if (newName == null && newPrice == null) {
-				System.out.println("You need to provide at least the name or the price to be updated.");
+				throw new CustomException("You need to provide at least the name or the price to be updated.");
 			} else {
 				if (newName != null) {
-					boolean nameExists = stock.stream().anyMatch(p -> p.getId() != id && p.getName().toUpperCase().equals(newName.toUpperCase()));
+					boolean nameExists = stock.stream()
+							.anyMatch(p -> p.getId() != id && p.getName().toUpperCase().equals(newName.toUpperCase()));
 					if (!nameExists) {
 						product.setName(newName);
 						System.out.println("Product name updated successfully.");
@@ -63,16 +64,14 @@ public class ProductManager {
 
 				System.out.println("Updated Product:\n" + product);
 			}
-			
-			
 		} else {
-			System.out.println("No products were found with the ID " + id + ". Update failed.");
+			throw new CustomException("No products were found with the ID " + id + ". Update failed.");
 		}
 	}
 
 	public void removeProduct(int id) {
 		if (!stock.stream().anyMatch(x -> x.getId().equals(id))) {
-			System.out.println("No products were found with the ID " + id);
+			throw new CustomException("No products were found with the ID " + id);
 		} else {
 			stock.removeIf(product -> product.getId() == id);
 			System.out.println("Removed successfully!");

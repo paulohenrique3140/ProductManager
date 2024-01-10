@@ -25,6 +25,24 @@ public class Program {
 		int id = 0;
 		int ans = 1;
 
+		String testUpdate = "s";
+
+		do {
+			try {
+				System.out.println("TEST UPDATE EXCPETION");
+				Eletronic testUpdateEletronic = new Eletronic("CONTROL", 25000.00, 88, 24, LocalDate.parse("2021-03-05"));
+				testeException.addProduct(testUpdateEletronic);
+				testeException.updateProduct(88, "CN", 2699.00);
+				System.out.println("TEST REMOVE EXCEPTION");
+				testeException.removeProduct(88);
+				
+				//testUpdate = sc.nextLine();
+			} catch (CustomException e) {
+				System.out.println("ERRRRRRROU: " + e.getMessage());
+			}
+		} while (testUpdate.equals('s'));
+		
+		
 		do {
 			try {
 				System.out.print("DIGITE O PRECO: ");
@@ -36,7 +54,7 @@ public class Program {
 				System.out.println();
 				System.out.print("DIGITE A GARANTIA: ");
 				guarantee = sc.nextInt();
-				Eletronic testGuarantee = new Eletronic("CPU", 1500.00, 2, guarantee, LocalDate.parse("2023-02-05"));
+				Eletronic testGuarantee = new Eletronic("TV", 1500.00, 2, guarantee, LocalDate.parse("2023-02-05"));
 				testeException.addProduct(testGuarantee);
 				sc.nextLine();
 				
