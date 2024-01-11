@@ -27,8 +27,8 @@ public class Program {
 			System.out.println("\n#### PRODUCT MANAGER ####");
 			try {
 				System.out.print("\nMenu: \n"
-						+ "[1] Add product\n[2] Show product list\n[2] Update product\n[3] Remove product\n[4] Work with files\n"
-						+ "[5] Check eletronic guarantee\n[6] Check instrument tax\n[0] Exit\n");
+						+ "[1] Add product\n[2] Show product list\n[3] Update product\n[4] Remove product\n[5] Work with files\n"
+						+ "[6] Check eletronic guarantee\n[7] Check instrument tax\n[0] Exit\n");
 				System.out.print("\nChoose an option: ");
 				option = sc.nextInt();
 				option = validateOption(option, 6);
@@ -70,6 +70,50 @@ public class Program {
 				case 2:
 					pm.displayProducts();
 					break;
+				case 3:
+					System.out.println("### UPDATE PRODUCT ###");
+					System.out.print("\n[1] Update name\n[2] Update price\n[3] Update both\n[0] Return to previous menu\n");
+					System.out.print("\nChoose an option: ");
+					int updateOption = sc.nextInt();
+					updateOption = validateOption(updateOption, 3);
+					if (updateOption != 0) {
+						System.out.print("\nType the product ID: ");
+						int updateId = sc.nextInt();
+						switch(updateOption) {
+						case 1:
+							System.out.print("\nEnter new name: ");
+							sc.nextLine();
+							String updateName = sc.nextLine();
+							pm.updateProduct(updateId, updateName, null);
+							break;
+						case 2:
+							System.out.print("\nEnter new price: ");
+							double updatePrice = sc.nextDouble();
+							pm.updateProduct(updateId, null, updatePrice);
+							break;
+						default:
+							System.out.print("\nEnter new name: ");
+							sc.nextLine();
+							updateName = sc.nextLine();
+							System.out.print("\nEnter new price: ");
+							updatePrice = sc.nextDouble();
+							pm.updateProduct(updateId, updateName, updatePrice);
+							break;
+						}
+					}
+					break;
+				case 4:
+					System.out.println("### REMOVING PRODUCTS ###");
+					pm.displayProducts();
+					System.out.print("\nEnter the ID of the product to be removed: ");
+					int removeId = sc.nextInt();
+					pm.removeProduct(removeId);
+					System.out.println("\n### Updated product list ###");
+					pm.displayProducts();
+					break;
+					
+					
+					
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());

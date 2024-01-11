@@ -52,7 +52,6 @@ public class ProductManager {
 							.anyMatch(p -> p.getId() != id && p.getName().toUpperCase().equals(newName.toUpperCase()));
 					if (!nameExists) {
 						product.setName(newName);
-						System.out.println("Product name updated successfully.");
 					} else {
 						System.out.println("Product with the same name already exists. Update failed.");
 					}
@@ -60,7 +59,6 @@ public class ProductManager {
 
 				if (newPrice != null) {
 					product.setPrice(newPrice);
-					System.out.println("Product price updated successfully.");
 				}
 
 				System.out.println("Updated Product:\n" + product);
