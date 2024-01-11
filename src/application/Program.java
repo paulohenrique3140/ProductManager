@@ -19,62 +19,58 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		ProductManager testeException = new ProductManager();
-		double price = 0.00;
-		int guarantee = 0;
-		String country = " ";
-		int id = 0;
-		int ans = 1;
+		ProductManager pm = new ProductManager();
 
-		/*String testUpdate = "s";
+		int option = -1;
 
 		do {
+			System.out.println("\n#### PRODUCT MANAGER ####");
 			try {
-				System.out.println("TEST UPDATE EXCPETION");
-				Eletronic testUpdateEletronic = new Eletronic("CONTROL", 25000.00, 88, 24, LocalDate.parse("2021-03-05"));
-				testeException.addProduct(testUpdateEletronic);
-				testeException.updateProduct(88, "CN", 2699.00);
-				System.out.println("TEST REMOVE EXCEPTION");
-				testeException.removeProduct(88);
-				
-				//testUpdate = sc.nextLine();
-			} catch (CustomException e) {
-				System.out.println("ERRRRRRROU: " + e.getMessage());
-			}
-		} while (testUpdate.equals('s'));*/
-		
-		
-		do {
-			try {
-				System.out.print("DIGITE O PRECO: ");
-				price = sc.nextDouble();
-				Eletronic testPrice = new Eletronic("PC", price, 1, 12, LocalDate.parse("2023-02-05"));
-				testeException.addProduct(testPrice);
-				
-				System.out.println();
-				System.out.println();
-				System.out.print("DIGITE A GARANTIA: ");
-				guarantee = sc.nextInt();
-				Eletronic testGuarantee = new Eletronic("TV", 1500.00, 2, guarantee, LocalDate.parse("2023-02-05"));
-				testeException.addProduct(testGuarantee);
-				sc.nextLine();
-				
-				System.out.println();
-				System.out.println();
-				System.out.print("DIGITE O COUNTRY: ");				
-				country = sc.nextLine();
-				MusicalInstrument testCountry = new MusicalInstrument("Viola", 650.00, 5, country.toUpperCase());
-				testeException.addProduct(testCountry);
-				
-				System.out.println();
-				System.out.println();
-				System.out.print("DIGITE O ID: ");
-				id = sc.nextInt();
-				Eletronic testId = new Eletronic("Mouse", 45.00, id, 15, LocalDate.parse("2023-02-05"));
-				testeException.addProduct(testId);
-				System.out.println();
-				System.out.println("Digite ANS: ");
-				ans = sc.nextInt();
+				System.out.print("\nMenu: \n"
+						+ "[1] Add product\n[2] Show product list\n[2] Update product\n[3] Remove product\n[4] Work with files\n"
+						+ "[5] Check eletronic guarantee\n[6] Check instrument tax\n[0] Exit\n");
+				System.out.print("\nChoose an option: ");
+				option = sc.nextInt();
+				option = validateOption(option, 6);
+
+				switch (option) {
+				case 1:
+					System.out.println("\n### ADD PRODUCT ###");
+					System.out.print("\n[1] Eletronic\n[2] Musical Instrument\n[0] Return to previous menu\n");
+					System.out.print("\nChoose an option: ");
+					int addProductOption = sc.nextInt();
+					addProductOption = validateOption(addProductOption, 2);
+					if (addProductOption != 0) {
+						System.out.print("\nName: ");
+						sc.nextLine();
+						String name = sc.nextLine();
+						System.out.print("Price: $ ");
+						double price = sc.nextDouble();
+						System.out.print("ID: ");
+						int id = sc.nextInt();
+
+						if (addProductOption == 1) {
+							System.out.print("Guarantee [months, > 0]: ");
+							int guarantee = sc.nextInt();
+							sc.nextLine();
+							System.out.print("Purchase date [YYYY-MM-DD]: ");
+							String purchaseDate = sc.nextLine();
+							Eletronic product = new Eletronic(name, price, id, guarantee,
+									LocalDate.parse(purchaseDate));
+							pm.addProduct(product);
+						} else {
+							sc.nextLine();
+							System.out.print("Country of origin: ");
+							String country = sc.nextLine();
+							MusicalInstrument product = new MusicalInstrument(name, price, id, country.toUpperCase());
+							pm.addProduct(product);
+						}
+					}
+					break;
+				case 2:
+					pm.displayProducts();
+					break;
+				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
 				sc.nextLine();
@@ -82,22 +78,31 @@ public class Program {
 				System.out.println("Error: " + e.getMessage());
 				sc.nextLine();
 			} catch (MusicalInstrumentException e) {
-				sc.nextLine();
 				System.out.println("Error: " + e.getMessage());
 				sc.nextLine();
 			} catch (CustomException e) {
 				System.out.println("Error: " + e.getMessage());
 				sc.nextLine();
 			} catch (DateTimeParseException e) {
-				System.out.println("Error: Invalid formate date. Try again with 'YYYY-MM-DD.");
-				
+				System.out.println("Error: Invalid format date or invalid date. "
+						+ "Enter and try again with a valid date and in format 'YYYY-MM-DD.");
+				sc.nextLine();
 			} catch (InputMismatchException e) {
-				System.out.println("Error: Invalid data. Try again.");
+				System.out.println("Error: Invalid data. Enter and try again.");
 				sc.nextLine();
 			}
-		} while (ans != 0);
-
+		} while (option != 0);
 		sc.close();
 
+	}
+
+	public static int validateOption(int option, int limit) {
+		Scanner input = new Scanner(System.in);
+
+		while (option < 0 || option > limit) {
+			System.out.print("\nInvalid option. Try again: ");
+			option = input.nextInt();
+		}
+		return option;
 	}
 }

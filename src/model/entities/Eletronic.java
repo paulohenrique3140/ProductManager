@@ -16,7 +16,7 @@ public class Eletronic extends Product {
 	public Eletronic(String name, Double price, Integer id, Integer guarantee, LocalDate purchaseDate) {
 		super(name, price, id);
 		if (guarantee < 0) {
-			throw new EletronicException("The guarantee cannot be less than zero. Type again: ");
+			throw new EletronicException("The guarantee cannot be less than zero. Enter and try again.");
 		}
 		
 		this.guarantee = guarantee;

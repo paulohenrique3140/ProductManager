@@ -16,7 +16,7 @@ public class MusicalInstrument extends Product {
 		Country countryEnum = Util.safeValueOf(Country.class, country);
 		
 		if (countryEnum == null) {
-			throw new MusicalInstrumentException("Country cannot be null or different from the pre-established. Type again: ");
+			throw new MusicalInstrumentException("Country cannot be null or different from the pre-established. Enter and try again.");
 		}
 		this.country = Country.valueOf(country);
 	}
