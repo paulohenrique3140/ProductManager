@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.Set;
 
 import exceptions.CustomException;
 import exceptions.EletronicException;
@@ -12,6 +14,7 @@ import exceptions.MusicalInstrumentException;
 import exceptions.ProductException;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
+import model.entities.Product;
 import model.entities.ProductManager;
 
 public class Program {
@@ -27,8 +30,8 @@ public class Program {
 			System.out.println("\n#### PRODUCT MANAGER ####");
 			try {
 				System.out.print("\nMenu: \n"
-						+ "[1] Add product\n[2] Show product list\n[3] Update product\n[4] Remove product\n[5] Work with files\n"
-						+ "[6] Check eletronic guarantee\n[7] Check instrument tax\n[0] Exit\n");
+						+ "[1] Add product\n[2] Show product list\n[3] Update product\n[4] Remove product\n[5] Check eletronic guarantee\n"
+						+ "[6] Check instrument tax\n[7] Work with files\n[0] Exit\n");
 				System.out.print("\nChoose an option: ");
 				option = sc.nextInt();
 				option = validateOption(option, 6);
@@ -111,9 +114,19 @@ public class Program {
 					System.out.println("\n### Updated product list ###");
 					pm.displayProducts();
 					break;
-					
-					
-					
+				case 5:
+					System.out.println("### CHECKING ELETRONIC PRODUCT GUARANTEE ###");
+					System.out.println("\nEnter product ID:");
+					int checkGuarantee = sc.nextInt();
+					if (checkGuaranteeAux(pm.getStock(), checkGuarantee) != null) {
+						if (checkGuaranteeAux(pm.getStock(), checkGuarantee).get().checkGuarantee()) {
+							System.out.println("Still in guarantee");
+						} else {
+							System.out.println("It isn't in guarantee anymore");
+						}
+					} else {
+						System.out.println("The id doesn't exist");
+					}
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
@@ -147,6 +160,12 @@ public class Program {
 			System.out.print("\nInvalid option. Try again: ");
 			option = input.nextInt();
 		}
+		input.close();
 		return option;
+	}
+	
+	public static Optional<Eletronic> checkGuaranteeAux(Set<Product> stock, int id) {
+		Optional<Eletronic> e = Optional.empty();
+		return e;
 	}
 }
