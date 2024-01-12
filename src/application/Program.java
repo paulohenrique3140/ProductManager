@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Locale;
-import java.util.Optional;
 import java.util.Scanner;
-import java.util.Set;
 
 import exceptions.CustomException;
 import exceptions.EletronicException;
@@ -14,7 +12,6 @@ import exceptions.MusicalInstrumentException;
 import exceptions.ProductException;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
-import model.entities.Product;
 import model.entities.ProductManager;
 
 public class Program {
@@ -114,19 +111,18 @@ public class Program {
 					System.out.println("\n### Updated product list ###");
 					pm.displayProducts();
 					break;
-				case 5:
+				case 5: // fix this
 					System.out.println("### CHECKING ELETRONIC PRODUCT GUARANTEE ###");
 					System.out.println("\nEnter product ID:");
 					int checkGuarantee = sc.nextInt();
-					if (checkGuaranteeAux(pm.getStock(), checkGuarantee) != null) {
-						if (checkGuaranteeAux(pm.getStock(), checkGuarantee).get().checkGuarantee()) {
-							System.out.println("Still in guarantee");
+					if (pm.findProduct(checkGuarantee) != null) {
+						if (pm.checkGuaranteeAux(checkGuarantee)) {
+							System.out.println("The product stills in guarantee.");
 						} else {
-							System.out.println("It isn't in guarantee anymore");
+							System.out.println("The product it doesn't in guarantee anymore.");
 						}
-					} else {
-						System.out.println("The id doesn't exist");
 					}
+					break;
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
@@ -162,10 +158,5 @@ public class Program {
 		}
 		input.close();
 		return option;
-	}
-	
-	public static Optional<Eletronic> checkGuaranteeAux(Set<Product> stock, int id) {
-		Optional<Eletronic> e = Optional.empty();
-		return e;
 	}
 }
