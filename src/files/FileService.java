@@ -13,7 +13,6 @@ import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
 import model.entities.Product;
 import model.entities.ProductManager;
-import model.entities.enums.Country;
 
 public class FileService {
 

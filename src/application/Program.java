@@ -102,7 +102,7 @@ public class Program {
 						}
 					}
 					break;
-				case 4:
+				/*case 4:
 					System.out.println("### REMOVING PRODUCTS ###");
 					pm.displayProducts();
 					System.out.print("\nEnter the ID of the product to be removed: ");
@@ -122,7 +122,7 @@ public class Program {
 							System.out.println("The product it doesn't in guarantee anymore.");
 						}
 					}
-					break;
+					break;*/
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
@@ -158,5 +158,6 @@ public class Program {
 		}
 		input.close();
 		return option;
+		
 	}
 }
