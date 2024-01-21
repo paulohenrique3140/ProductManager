@@ -10,6 +10,7 @@ import exceptions.CustomException;
 import exceptions.EletronicException;
 import exceptions.MusicalInstrumentException;
 import exceptions.ProductException;
+import files.FileService;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
 import model.entities.Product;
@@ -72,14 +73,15 @@ public class Program {
 					break;
 				case 3:
 					System.out.println("### UPDATE PRODUCT ###");
-					System.out.print("\n[1] Update name\n[2] Update price\n[3] Update both\n[0] Return to previous menu\n");
+					System.out.print(
+							"\n[1] Update name\n[2] Update price\n[3] Update both\n[0] Return to previous menu\n");
 					System.out.print("\nChoose an option: ");
 					int updateOption = sc.nextInt();
 					updateOption = validateOption(sc, updateOption, 3);
 					if (updateOption != 0) {
 						System.out.print("\nType the product ID: ");
 						int updateId = sc.nextInt();
-						switch(updateOption) {
+						switch (updateOption) {
 						case 1:
 							System.out.print("\nEnter new name: ");
 							sc.nextLine();
@@ -118,7 +120,7 @@ public class Program {
 					Product foundProduct = pm.findProduct(checkGuarantee);
 					if (foundProduct != null && foundProduct instanceof Eletronic) {
 						Eletronic eletronicProduct = (Eletronic) foundProduct;
-						
+
 						if (eletronicProduct.checkGuarantee()) {
 							System.out.println("The product still in guarantee.");
 						} else {
@@ -135,12 +137,50 @@ public class Program {
 					foundProduct = pm.findProduct(checkTax);
 					if (foundProduct != null && foundProduct instanceof MusicalInstrument) {
 						MusicalInstrument musicalProduct = (MusicalInstrument) foundProduct;
-						
+
 						if (musicalProduct.checkTax() != null) {
 							System.out.println(pm.findProduct(checkTax));
 							System.out.printf("Tax: BRL %.2f\n", musicalProduct.checkTax());
 						}
 					}
+					break;
+				case 7:
+					System.out.println("\n### WORKING WITH FILES ###");
+					System.out.print("\nBefore we begin, please enter the path with which you will work with files: ");
+					sc.nextLine();
+					String path = sc.nextLine();
+					System.out.print("Now, enter the file name [Ex: file.txt]: ");
+					String fileName = sc.nextLine();
+					FileService fs = new FileService(path);
+					System.out.print(
+							"\n[1] Download a file with product list\n[2] Delete load\n[3] Update load\n[4] Insert load\n"
+									+ "[0] Return to main menu\n");
+					System.out.print("\nChoose an option: ");
+					int fileOption = sc.nextInt();
+					fileOption = validateOption(sc, fileOption, 4);
+					if (fileOption != 0) {
+						switch (fileOption) {
+						case 1:
+							fs.writeToFile(pm, fileName);
+							break;
+						case 2:
+							fs.deleteFromFile(pm, fileName);
+							break;
+						case 3:
+							fs.updateFromFile(pm, fileName);
+							break;
+						case 4:
+							fs.insertFromFile(pm, fileName);
+							break;
+						default:
+							break;
+						}
+					}
+					break;
+				default:
+					System.out.println(
+							"\n### Thank you for using our app, we're at your disposal if you have any questions. ###");
+					break;
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
