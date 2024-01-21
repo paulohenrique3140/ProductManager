@@ -21,7 +21,6 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 
 		ProductManager pm = new ProductManager();
-
 		int option = -1;
 
 		do {
@@ -32,7 +31,7 @@ public class Program {
 						+ "[6] Check instrument tax\n[7] Work with files\n[0] Exit\n");
 				System.out.print("\nChoose an option: ");
 				option = sc.nextInt();
-				option = validateOption(sc, option, 6);
+				option = validateOption(sc, option, 7);
 
 				switch (option) {
 				case 1:
@@ -129,6 +128,19 @@ public class Program {
 						System.out.println("No Eletronic product found with the ID " + checkGuarantee);
 					}
 					break;
+				case 6:
+					System.out.println("\n### CHECKING MUSICAL INSTRUMENT TAX ###");
+					System.out.print("\nEnter product ID: ");
+					int checkTax = sc.nextInt();
+					foundProduct = pm.findProduct(checkTax);
+					if (foundProduct != null && foundProduct instanceof MusicalInstrument) {
+						MusicalInstrument musicalProduct = (MusicalInstrument) foundProduct;
+						
+						if (musicalProduct.checkTax() != null) {
+							System.out.println(pm.findProduct(checkTax));
+							System.out.printf("Tax: BRL %.2f\n", musicalProduct.checkTax());
+						}
+					}
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());

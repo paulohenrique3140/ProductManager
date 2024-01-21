@@ -39,6 +39,6 @@ public class MusicalInstrument extends Product {
 		);
 	
 	public Double checkTax() {
-		return Optional.ofNullable(TAX_RATES.get(country)).map(rate -> getPrice() + (getPrice() * rate)).orElse(null);
+		return Optional.ofNullable(TAX_RATES.get(country)).map(rate -> getPrice() * rate).orElse(null);
 	}
 }
