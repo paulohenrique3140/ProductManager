@@ -1,6 +1,5 @@
 package model.entities;
 
-import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -30,13 +29,11 @@ public class ProductManager {
 	}
 
 	public void displayProducts() {
-		
 		System.out.println(stock);
 	}
 
-	public String findProduct(int id) {
-		return stock.stream().filter(x -> x.getId() == id).findFirst().map(Product::toString)
-				.orElse("No products were found with the ID " + id);
+	public Product findProduct(int id) {
+	    return stock.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
 	}
 
 	public void updateProduct(int id, String newName, Double newPrice) {
@@ -78,15 +75,4 @@ public class ProductManager {
 			System.out.println(stock);
 		}
 	}
-	
-	public boolean checkGuaranteeAux (int id) {
-		String[] fields = findProduct(id).split(",");
-		String name = fields[0];
-		double price = Double.parseDouble(fields[1]);
-		int idTest = Integer.parseInt(fields[2]);
-		int guarantee = Integer.parseInt(fields[3]);
-		String purchaseDate = fields[4];
-		Eletronic e = new Eletronic(name, price, idTest, guarantee, LocalDate.parse(purchaseDate));
-		return e.checkGuarantee();
-	};
 }

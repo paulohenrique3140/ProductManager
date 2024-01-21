@@ -51,7 +51,7 @@ public abstract class Product implements IProduct, Comparable<Product> {
 	
 	@Override
 	public String toString() {
-		return "\nName: " + name + " | Price: BRL " + price + " | ID: " + id + "\n";
+		return String.format("\nName: %s | Price: BRL %.2f | ID: %d\n", name, price, id);
 	}
 
 	@Override

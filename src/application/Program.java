@@ -12,6 +12,7 @@ import exceptions.MusicalInstrumentException;
 import exceptions.ProductException;
 import model.entities.Eletronic;
 import model.entities.MusicalInstrument;
+import model.entities.Product;
 import model.entities.ProductManager;
 
 public class Program {
@@ -31,7 +32,7 @@ public class Program {
 						+ "[6] Check instrument tax\n[7] Work with files\n[0] Exit\n");
 				System.out.print("\nChoose an option: ");
 				option = sc.nextInt();
-				option = validateOption(option, 6);
+				option = validateOption(sc, option, 6);
 
 				switch (option) {
 				case 1:
@@ -39,7 +40,7 @@ public class Program {
 					System.out.print("\n[1] Eletronic\n[2] Musical Instrument\n[0] Return to previous menu\n");
 					System.out.print("\nChoose an option: ");
 					int addProductOption = sc.nextInt();
-					addProductOption = validateOption(addProductOption, 2);
+					addProductOption = validateOption(sc, addProductOption, 2);
 					if (addProductOption != 0) {
 						System.out.print("\nName: ");
 						sc.nextLine();
@@ -75,7 +76,7 @@ public class Program {
 					System.out.print("\n[1] Update name\n[2] Update price\n[3] Update both\n[0] Return to previous menu\n");
 					System.out.print("\nChoose an option: ");
 					int updateOption = sc.nextInt();
-					updateOption = validateOption(updateOption, 3);
+					updateOption = validateOption(sc, updateOption, 3);
 					if (updateOption != 0) {
 						System.out.print("\nType the product ID: ");
 						int updateId = sc.nextInt();
@@ -102,7 +103,7 @@ public class Program {
 						}
 					}
 					break;
-				/*case 4:
+				case 4:
 					System.out.println("### REMOVING PRODUCTS ###");
 					pm.displayProducts();
 					System.out.print("\nEnter the ID of the product to be removed: ");
@@ -111,18 +112,23 @@ public class Program {
 					System.out.println("\n### Updated product list ###");
 					pm.displayProducts();
 					break;
-				case 5: // fix this
-					System.out.println("### CHECKING ELETRONIC PRODUCT GUARANTEE ###");
-					System.out.println("\nEnter product ID:");
+				case 5:
+					System.out.println("\n### CHECKING ELETRONIC PRODUCT GUARANTEE ###");
+					System.out.print("\nEnter product ID: ");
 					int checkGuarantee = sc.nextInt();
-					if (pm.findProduct(checkGuarantee) != null) {
-						if (pm.checkGuaranteeAux(checkGuarantee)) {
-							System.out.println("The product stills in guarantee.");
+					Product foundProduct = pm.findProduct(checkGuarantee);
+					if (foundProduct != null && foundProduct instanceof Eletronic) {
+						Eletronic eletronicProduct = (Eletronic) foundProduct;
+						
+						if (eletronicProduct.checkGuarantee()) {
+							System.out.println("The product still in guarantee.");
 						} else {
-							System.out.println("The product it doesn't in guarantee anymore.");
+							System.out.println("The product doesn't have guarantee anyumore.");
 						}
+					} else {
+						System.out.println("No Eletronic product found with the ID " + checkGuarantee);
 					}
-					break;*/
+					break;
 				}
 			} catch (ProductException e) {
 				System.out.println("Error: " + e.getMessage());
@@ -149,15 +155,11 @@ public class Program {
 
 	}
 
-	public static int validateOption(int option, int limit) {
-		Scanner input = new Scanner(System.in);
-
+	public static int validateOption(Scanner scanner, int option, int limit) {
 		while (option < 0 || option > limit) {
 			System.out.print("\nInvalid option. Try again: ");
-			option = input.nextInt();
+			option = scanner.nextInt();
 		}
-		input.close();
 		return option;
-		
 	}
 }
