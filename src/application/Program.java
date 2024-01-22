@@ -72,7 +72,7 @@ public class Program {
 					pm.displayProducts();
 					break;
 				case 3:
-					System.out.println("### UPDATE PRODUCT ###");
+					System.out.println("\n### UPDATE PRODUCT ###");
 					System.out.print(
 							"\n[1] Update name\n[2] Update price\n[3] Update both\n[0] Return to previous menu\n");
 					System.out.print("\nChoose an option: ");
@@ -105,13 +105,11 @@ public class Program {
 					}
 					break;
 				case 4:
-					System.out.println("### REMOVING PRODUCTS ###");
+					System.out.println("\n### REMOVING PRODUCTS ###");
 					pm.displayProducts();
 					System.out.print("\nEnter the ID of the product to be removed: ");
 					int removeId = sc.nextInt();
 					pm.removeProduct(removeId);
-					System.out.println("\n### Updated product list ###");
-					pm.displayProducts();
 					break;
 				case 5:
 					System.out.println("\n### CHECKING ELETRONIC PRODUCT GUARANTEE ###");
@@ -122,12 +120,12 @@ public class Program {
 						Eletronic eletronicProduct = (Eletronic) foundProduct;
 
 						if (eletronicProduct.checkGuarantee()) {
-							System.out.println("The product still in guarantee.");
+							System.out.println("\nThe product still in guarantee.");
 						} else {
-							System.out.println("The product doesn't have guarantee anyumore.");
+							System.out.println("\nThe product doesn't have guarantee anyumore.");
 						}
 					} else {
-						System.out.println("No Eletronic product found with the ID " + checkGuarantee);
+						System.out.println("\nNo Eletronic product found with the ID " + checkGuarantee);
 					}
 					break;
 				case 6:
@@ -142,6 +140,8 @@ public class Program {
 							System.out.println(pm.findProduct(checkTax));
 							System.out.printf("Tax: BRL %.2f\n", musicalProduct.checkTax());
 						}
+					} else {
+						System.out.println("\nNo Musical Instrument product found with the ID " + checkTax);
 					}
 					break;
 				case 7:
@@ -183,23 +183,23 @@ public class Program {
 					break;
 				}
 			} catch (ProductException e) {
-				System.out.println("Error: " + e.getMessage());
+				System.out.println("\nError: " + e.getMessage());
 				sc.nextLine();
 			} catch (EletronicException e) {
-				System.out.println("Error: " + e.getMessage());
+				System.out.println("\nError: " + e.getMessage());
 				sc.nextLine();
 			} catch (MusicalInstrumentException e) {
-				System.out.println("Error: " + e.getMessage());
+				System.out.println("\nError: " + e.getMessage());
 				sc.nextLine();
 			} catch (CustomException e) {
-				System.out.println("Error: " + e.getMessage());
+				System.out.println("\nError: " + e.getMessage());
 				sc.nextLine();
 			} catch (DateTimeParseException e) {
-				System.out.println("Error: Invalid format date or invalid date. "
+				System.out.println("\nError: Invalid format date or invalid date. "
 						+ "Enter and try again with a valid date and in format 'YYYY-MM-DD.");
 				sc.nextLine();
 			} catch (InputMismatchException e) {
-				System.out.println("Error: Invalid data. Enter and try again.");
+				System.out.println("\nError: Invalid data. Enter and try again.");
 				sc.nextLine();
 			}
 		} while (option != 0);

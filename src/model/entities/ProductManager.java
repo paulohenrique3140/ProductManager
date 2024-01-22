@@ -51,7 +51,7 @@ public class ProductManager {
 					if (!nameExists) {
 						product.setName(newName);
 					} else {
-						System.out.println("Product with the same name already exists. Update failed.");
+						System.out.println("\nProduct with the same name already exists. Update failed.");
 					}
 				}
 
@@ -59,7 +59,7 @@ public class ProductManager {
 					product.setPrice(newPrice);
 				}
 
-				System.out.println("Updated Product:\n" + product);
+				System.out.println("\nUpdated Product:\n" + product);
 			}
 		} else {
 			throw new CustomException("No products were found with the ID " + id + ". Update failed.");
@@ -71,7 +71,7 @@ public class ProductManager {
 			throw new CustomException("No products were found with the ID " + id);
 		} else {
 			stock.removeIf(product -> product.getId() == id);
-			System.out.println("Removed successfully!");
+			System.out.println("\nRemoved successfully!");
 			System.out.println(stock);
 		}
 	}
