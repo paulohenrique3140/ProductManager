@@ -1,6 +1,6 @@
 # ProductManager - Sistema de Gerenciamento de Produtos
 
-![ProductManager_Logo](/logo.png)
+![ProductManager_Logo](/logo.PNG)
 
 Bem-vindo ao Sistema de Gerenciamento de Produtos em Java! Este projeto é um sistema simples de gerenciamento de produtos que utiliza arquivos para armazenamento persistente. Ele foi desenvolvido como parte do aprendizado em programação em Java.
 
